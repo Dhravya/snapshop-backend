@@ -14,7 +14,7 @@ async def ask_shopwise(item_name: str):
     # response = httpx.get(f"https://dropit2-production.up.railway.app/googleSearch?itemName={item_name}")
     # return response.json()
 
-    response = httpx.get(f"https://dropit2-production.up.railway.app/googleSearch?itemName={item_name}")
+    response = httpx.get(f"https://dropit2-production.up.railway.app/googleSearch?itemName={item_name}", timeout=6000)
     return response.json()
 
 @asyncify
@@ -61,10 +61,6 @@ def get_fashion_image(base64_image: str):
 
     function_response = json.loads(function_response.choices[0].message.function_call.arguments)
 
-    function_response.fashion_items_as_keywords = [
-            {outputKey: ask_shopwise(outputKey)} for outputKey in function_response["fashion_items_as_keywords"]
-        ]
-
     return function_response
 
 async def get_fashion_and_user_image(original_image: str, user_email: str):
@@ -75,11 +71,11 @@ async def get_fashion_and_user_image(original_image: str, user_email: str):
             "error": "User not found",
         }
 
-    output_json = await asyncio.gather(
-        get_fashion_image(original_image),
-    )
+    output_json = await get_fashion_image(original_image)
+    print(output_json)
 
     shopping_links = output_json['fashion_items_as_keywords']
+    print(shopping_links)
 
     shopping_links = await asyncio.gather(
         *[ask_shopwise(keyword) for keyword in shopping_links]
@@ -90,6 +86,11 @@ async def get_fashion_and_user_image(original_image: str, user_email: str):
     if not isinstance(output_json, dict):
         output_json = json.loads(output_json)
 
-    create_generation(output_json)
+    print(output_json)
+
+    try:
+        create_generation(output_json)
+    except Exception as e:
+        print(e)
 
     return output_json
