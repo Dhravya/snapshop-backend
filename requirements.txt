@@ -3,3 +3,10 @@ fastapi
 uvicorn
 openai
 requests
+redis-om
+rich
+httpx
+python-dotenv
+asyncify
+pillow
+rich-traceback
