@@ -3,6 +3,7 @@ from fastapi import FastAPI, Body
 from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 import json
+import requests
 
 
 class Image(BaseModel):
@@ -22,7 +23,7 @@ functions = [
             "properties": {
                 "comment": {
                     "type": "string",
-                    "description": "A positive comment about the fashion sense of the image",
+                    "description": "A very short positive comment about the fashion sense of the image",
                 },
                 "style_name": {
                     "type": "string",
@@ -49,6 +50,9 @@ functions = [
     },
 ]
 
+def ask_shopwise(item_name: str):
+    response = requests.get(f"https://dropit2-production.up.railway.app/searchItem?itemName={item_name}")
+    return response.json()
 
 @app.get("/")
 def read_root():
@@ -99,11 +103,19 @@ def predict(image: Image = Body(...)):
 
     json_output = function_response.choices[0].message.function_call.arguments
 
-    return JSONResponse(content=json.loads(json_output))
+    with_shopping_links = {
+        "comment": json_output["comment"],
+        "style_name": json_output["style_name"],
+        "fashion_items_as_keywords": [
+            {outputKey: ask_shopwise(outputKey)[0]} for outputKey in json_output["fashion_items_as_keywords"]
+        ],
+        "fashion_items_as_description": json_output["fashion_items_as_description"],
+    }
 
+    return JSONResponse(content=with_shopping_links)
 
 @app.post("/fashion_sense_test")
-def predict(image: Image = Body(...)):
+def predict_test(image: Image = Body(...)):
     json_output = {
         "comment": "You have a great sense of style! Your outfit is casual and layered, creating a modern and comfortable look. The combination of colors and textures is well-coordinated, giving off a casual yet sophisticated vibe. The choice of eyewear and the relaxed fit of the trousers add a contemporary touch to the overall outfit. The apple logo on the laptop adds a tech-savvy element to your style.",
         "style_name": "casual",
@@ -134,10 +146,19 @@ def predict(image: Image = Body(...)):
             "Laptop computer with a visible Apple Inc. logo",
         ],
     }
-    return JSONResponse(content=json.loads(json_output))
-
+    
+    with_shopping_links = {
+        "comment": json_output["comment"],
+        "style_name": json_output["style_name"],
+        "fashion_items_as_keywords": [
+            {outputKey: ask_shopwise(outputKey)[0]} for outputKey in json_output["fashion_items_as_keywords"]
+        ],
+        "fashion_items_as_description": json_output["fashion_items_as_description"],
+    }
+    return JSONResponse(content=with_shopping_links)
 
 if __name__ == "__main__":
     import uvicorn
 
-    uvicorn.run("app:app", reload=True)
+    uvicorn.run("main:app", host="0.0.0.0", port=8000)
+    
