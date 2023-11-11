@@ -4,8 +4,10 @@ from fastapi.responses import JSONResponse
 from pydantic import BaseModel
 import json
 
+
 class Image(BaseModel):
     image: str
+
 
 app = FastAPI()
 client = OpenAI()
@@ -61,7 +63,10 @@ def predict(image: Image = Body(...)):
             {
                 "role": "user",
                 "content": [
-                    {"type": "text", "text": "What’s in this image? Describe it in as detail as possible. You are a fashion stylist. Be as descriptive about the fashion items as possible."},
+                    {
+                        "type": "text",
+                        "text": "What’s in this image? Describe it in as detail as possible. You are a fashion stylist. Be as descriptive about the fashion items as possible.",
+                    },
                     {
                         "type": "image_url",
                         "image_url": {
@@ -80,17 +85,55 @@ def predict(image: Image = Body(...)):
             {
                 "role": "user",
                 "content": [
-                    {"type": "text", "text": f"What’s in this image? Describe it in as detail as possible. You are a fashion stylist. Be as descriptive about the fashion items as possible. Here's the description of the image: {response.choices[0]}"},
+                    {
+                        "type": "text",
+                        "text": f"What’s in this image? Describe it in as detail as possible. You are a fashion stylist. Be as descriptive about the fashion items as possible. Here's the description of the image: {response.choices[0]}",
+                    },
                 ],
             }
         ],
         max_tokens=500,
         functions=functions,
-        function_call='auto'
+        function_call="auto",
     )
 
     json_output = function_response.choices[0].message.function_call.arguments
 
+    return JSONResponse(content=json.loads(json_output))
+
+
+@app.post("/fashion_sense_test")
+def predict(image: Image = Body(...)):
+    json_output = {
+        "comment": "You have a great sense of style! Your outfit is casual and layered, creating a modern and comfortable look. The combination of colors and textures is well-coordinated, giving off a casual yet sophisticated vibe. The choice of eyewear and the relaxed fit of the trousers add a contemporary touch to the overall outfit. The apple logo on the laptop adds a tech-savvy element to your style.",
+        "style_name": "casual",
+        "fashion_items_as_keywords": [
+            "glasses",
+            "short textured hair",
+            "white crewneck t-shirt",
+            "heather gray pullover hoodie",
+            "blue zip-up jacket",
+            "dark green trousers",
+            "cuffed trousers",
+            "ankle-revealing trousers",
+            "drop-crotch silhouette trousers",
+            "navy blue sneakers",
+            "suede and fabric sneakers",
+            "laptop with apple logo",
+        ],
+        "fashion_items_as_description": [
+            "Pair of dark-rimmed glasses",
+            "Short textured hair",
+            "White crewneck t-shirt",
+            "Heather gray pullover hoodie",
+            "Blue zip-up jacket with a visible texture",
+            "Dark green trousers with a relaxed fit",
+            "Cuffed dark green trousers that reveal the ankles",
+            "Trousers with a slight drop-crotch silhouette",
+            "Navy blue sneakers with a clean and sleek design",
+            "Laptop computer with a visible Apple Inc. logo",
+        ],
+    }
     return JSONResponse(content=json.loads(json_output))
 
 
