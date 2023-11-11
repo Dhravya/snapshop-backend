@@ -94,9 +94,3 @@ async def get_fashion_and_user_image(original_image: str, user_email: str):
         print(e)
 
     return output_json
-
-import json
-with open("test.json", "r") as f:
-    json_output = json.load(f)
-
-    asyncio.run(get_fashion_and_user_image(json_output["original_image"], "dhravyashah@gmail.com"))
