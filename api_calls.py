@@ -79,6 +79,13 @@ async def get_fashion_and_user_image(original_image: str, user_email: str):
         get_fashion_image(original_image),
     )
 
+    shopping_links = output_json['fashion_items_as_keywords']
+
+    shopping_links = await asyncio.gather(
+        *[ask_shopwise(keyword) for keyword in shopping_links]
+    )
+    output_json['fashion_items_as_keywords'] = shopping_links
+    
     # json.loads output_json if it's a string
     if not isinstance(output_json, dict):
         output_json = json.loads(output_json)
