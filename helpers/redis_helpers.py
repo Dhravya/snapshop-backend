@@ -46,3 +46,14 @@ def create_generation(generated_json_output_as_dict: dict) -> Generation:
     generation = Generation(generated_json_output_as_dict)
     generation.save()
     return generation
+
+def get_all_generations() -> List[Generation]:
+    """Get all generations from redis"""
+    generations = Generation.all_pks()
+
+    g = [Generation.get(pk=generation).dict() for generation in generations]
+    print(g)
+
+    return g
+
+get_all_generations()

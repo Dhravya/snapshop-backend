@@ -1,6 +1,6 @@
 from fastapi import FastAPI, Body
 from fastapi.responses import JSONResponse
-from helpers.redis_helpers import create_user
+from helpers.redis_helpers import create_user, get_all_generations
 from helpers.models import UserInfo, TryOnImage
 from dotenv import load_dotenv
 from api_calls import get_fashion_and_user_image
@@ -63,7 +63,10 @@ async def predict_test(image: TryOnImage = Body(...)):
         json_output = json.load(f)
 
         return json_output
-
+    
+@app.get("/featured_page")
+async def featured_page():
+    return JSONResponse(get_all_generations())
 
 if __name__ == "__main__":
     import uvicorn

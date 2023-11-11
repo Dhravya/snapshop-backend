@@ -81,7 +81,7 @@ async def get_fashion_and_user_image(original_image: str, user_email: str):
         *[ask_shopwise(keyword) for keyword in shopping_links]
     )
     output_json['fashion_items_as_keywords'] = shopping_links
-    output_json['original_image'] = original_image
+    output_json['original_image'] = upload_image(original_image)
     
     if not isinstance(output_json, dict):
         output_json = json.loads(output_json)
