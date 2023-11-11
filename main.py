@@ -90,21 +90,6 @@ async def predict_test(image: TryOnImage = Body(...)):
         ],
     }
 
-    # loop = None
-
-    # try:
-    #     loop = asyncio.get_event_loop()
-    # except RuntimeError:
-    #     print("Creating new event loop")
-    #     loop = asyncio.new_event_loop()
-    #     asyncio.set_event_loop(loop)
-
-    # # output = await ask_shopwise_all_at_once(json_output["fashion_items_as_keywords"])
-
-    # output_shopwise = []
-    # for keyword in json_output["fashion_items_as_keywords"]:
-    #     output_shopwise.append(await ask_shopwise(keyword))
-
     return json_output
 
 
