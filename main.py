@@ -17,7 +17,6 @@ import logging
 install()
 load_dotenv()
 
-print(env.get("REDIS_OM_URL"))
 redis = get_redis_connection(url=env.get("REDIS_OM_URL"))
 Migrator().run()
 
@@ -61,12 +60,12 @@ async def predict(image: TryOnImage = Body(...)):
 async def predict_test(image: TryOnImage = Body(...)):
     with open("test.json", "r") as f:
         json_output = json.load(f)
-
         return json_output
     
 @app.get("/featured_page")
 async def featured_page():
     return JSONResponse(get_all_generations())
+
 
 if __name__ == "__main__":
     import uvicorn

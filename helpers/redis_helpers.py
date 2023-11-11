@@ -52,8 +52,5 @@ def get_all_generations() -> List[Generation]:
     generations = Generation.all_pks()
 
     g = [Generation.get(pk=generation).dict() for generation in generations]
-    print(g)
 
     return g
-
-get_all_generations()

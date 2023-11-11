@@ -13,10 +13,3 @@ def upload_image(image_as_base64):
     response = requests.put('https://worker-silent-night-fcb9.dhravya.workers.dev/' + timestamp + '.jpg', data=image_in_bytes, headers={'Content-Type': 'image/jpeg', 'X-Custom-Auth-Key': 'yourmom'})
 
     return response.text
-
-
-import json
-with open("test.json", "r") as f:
-    json_output = json.load(f)
-
-    upload_image(json_output["original_image"])
