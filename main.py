@@ -54,10 +54,13 @@ async def new_user(image: UploadFile = File(...), email: str = Form(...), gender
     return JSONResponse(content=user.dict())
 
 @app.post("/fashion_sense")
-async def predict(image: TryOnImage = Body(...)):
+async def predict(image: UploadFile = File(...), email: str = Form(...)):
     """Predict endpoint, this takes an image and returns a prediction with the shopping links"""
+    io_to_upload = image.file.read()
+    to_base64 = base64.b64encode(io_to_upload)
+    
     json_output = await get_fashion_and_user_image(
-        image.original_image, image.user_email
+        to_base64, email
     )
 
     return JSONResponse(content=json_output)
