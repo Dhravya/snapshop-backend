@@ -58,7 +58,7 @@ async def predict(image: UploadFile = File(...), email: str = Form(...)):
     """Predict endpoint, this takes an image and returns a prediction with the shopping links"""
     io_to_upload = image.file.read()
     to_base64 = base64.b64encode(io_to_upload)
-    
+        
     json_output = await get_fashion_and_user_image(
         to_base64, email
     )

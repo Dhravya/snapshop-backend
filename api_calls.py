@@ -19,6 +19,7 @@ async def ask_shopwise(item_name: str):
 
 @asyncify
 def get_fashion_image(base64_image: str, user_gender: str):
+    image = upload_image(base64_image)
     response = client.chat.completions.create(
         model="gpt-4-vision-preview",
         messages=[
@@ -32,7 +33,7 @@ def get_fashion_image(base64_image: str, user_gender: str):
                     {
                         "type": "image_url",
                         "image_url": {
-                            "url": f"data:image/jpeg;base64,{base64_image}",
+                            "url": f"{image}",
                         },
                     },
                 ],
