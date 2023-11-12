@@ -9,8 +9,6 @@ from helpers.upload_image import upload_image
 
 client = OpenAI()
 
-timeout = httpx.TimeoutConfig(connect_timeout=5, read_timeout=None, write_timeout=5)
-
 async def ask_shopwise(item_name: str):
     print("Asking shopwise for " + item_name)
     # response = httpx.get(f"https://dropit2-production.up.railway.app/googleSearch?itemName={item_name}")
@@ -18,7 +16,7 @@ async def ask_shopwise(item_name: str):
 
     response = httpx.get(
         f"https://dropit2-production.up.railway.app/googleSearch?itemName={item_name}",
-        timeout=timeout
+        timeout=None
     )
 
     try:
