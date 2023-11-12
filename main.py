@@ -41,14 +41,15 @@ def read_root():
 
 @app.post("/new_user")
 async def new_user(user: UserInfo = Body(...)):
+    """Send a request to create a new user whenever a new user is created in the frontend"""
     url = upload_image(user.image)
     user = create_user(user.name, user.email, url, user.gender)
 
     return JSONResponse(content=user.dict())
 
-
 @app.post("/fashion_sense")
 async def predict(image: TryOnImage = Body(...)):
+    """Predict endpoint, this takes an image and returns a prediction with the shopping links"""
     json_output = await get_fashion_and_user_image(
         image.original_image, image.user_email
     )
@@ -57,6 +58,7 @@ async def predict(image: TryOnImage = Body(...)):
 
 @app.get("/fashion_recommendation")
 async def predict_recommendation(user_prompt: str, user_email: str):
+    """Recommendation endpoint for chat, this takes a user prompt and returns a prediction with the shopping links"""
     json_output = await get_fashion_recommendation_with_shopping_links(
         user_prompt, user_email
     )
@@ -66,12 +68,14 @@ async def predict_recommendation(user_prompt: str, user_email: str):
 
 @app.post("/fashion_sense_test")
 async def predict_test(image: TryOnImage = Body(...)):
+    """Acts like predict / predict_recommendation but returns a test json instead of calling the api"""
     with open("test.json", "r") as f:
         json_output = json.load(f)
         return json_output
     
 @app.get("/featured_page")
 async def featured_page():
+    """All generations are stored in redis, this endpoint returns all generations for the explore page"""
     return JSONResponse(get_all_generations())
 
 
