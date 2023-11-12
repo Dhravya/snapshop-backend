@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Body, Form, File
+from fastapi import FastAPI, Body, Form, File,UploadFile
 from fastapi.responses import JSONResponse
 from helpers.redis_helpers import create_user, get_all_generations
 from helpers.models import UserInfo, TryOnImage
@@ -13,6 +13,8 @@ import asyncio
 from rich.traceback import install
 import json
 import logging
+from typing import Annotated
+import base64
 
 install()
 load_dotenv()
@@ -40,10 +42,13 @@ def read_root():
 
 
 @app.post("/new_user")
-async def new_user(image= File(...), email: str = Form(...), gender: str = Form(...), name: str = Form(...) ):
+async def new_user(image: UploadFile = File(...), email: str = Form(...), gender: str = Form(...), name: str = Form(...) ):
     """Send a request to create a new user whenever a new user is created in the frontend"""
-    print(image)
-    url = upload_image(image)
+
+    io_to_upload = image.file.read()
+    to_base64 = base64.b64encode(io_to_upload)
+
+    url = upload_image(to_base64)
     user = create_user(name, email, url, gender)
 
     return JSONResponse(content=user.dict())
