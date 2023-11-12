@@ -6,6 +6,7 @@ from helpers.redis_helpers import get_user, create_generation
 import asyncio
 import json
 from helpers.upload_image import upload_image
+import requests
 
 client = OpenAI()
 
@@ -14,9 +15,8 @@ async def ask_shopwise(item_name: str):
     # response = httpx.get(f"https://dropit2-production.up.railway.app/googleSearch?itemName={item_name}")
     # return response.json()
 
-    response = httpx.get(
+    response = requests.get(
         f"https://dropit2-production.up.railway.app/googleSearch?itemName={item_name}",
-        timeout=None
     )
 
     try:
