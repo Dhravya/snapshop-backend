@@ -17,6 +17,7 @@ async def ask_shopwise(item_name: str):
 
     response = httpx.get(
         f"https://dropit2-production.up.railway.app/googleSearch?itemName={item_name}",
+        timeout=15
     )
 
     try:
