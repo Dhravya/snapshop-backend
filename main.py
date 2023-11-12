@@ -42,7 +42,7 @@ def read_root():
 @app.post("/new_user")
 async def new_user(user: UserInfo = Body(...)):
     url = upload_image(user.image)
-    user = create_user(user.name, user.email, url)
+    user = create_user(user.name, user.email, url, user.gender)
 
     return JSONResponse(content=user.dict())
 
@@ -50,15 +50,15 @@ async def new_user(user: UserInfo = Body(...)):
 @app.post("/fashion_sense")
 async def predict(image: TryOnImage = Body(...)):
     json_output = await get_fashion_and_user_image(
-        image.original_image
+        image.original_image, image.user_email
     )
 
     return JSONResponse(content=json_output)
 
 @app.get("/fashion_recommendation")
-async def predict_recommendation(user_prompt: str):
+async def predict_recommendation(user_prompt: str, user_email: str):
     json_output = await get_fashion_recommendation_with_shopping_links(
-        user_prompt
+        user_prompt, user_email
     )
 
     return JSONResponse(content=json_output)
