@@ -20,7 +20,7 @@ functions = [
                 },
                 "fashion_items_as_keywords": {
                     "type": "array",
-                    "description": "A list of fashion items in the image as a google searchable word. There must be one string for every item in image. Include the color, gender of the subject and brand where necessary. The user should be able to create a google search query with this string.",
+                    "description": "A list of fashion items in the image as a google searchable word. There must be one string for every item in image. Include the color, gender of the subject and brand where necessary - like mens blue zip-up hoodie. The user should be able to create a google search query with this string.",
                     "items": {"type": "string"},
                 },
             },
