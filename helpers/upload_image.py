@@ -12,4 +12,5 @@ def upload_image(image_as_base64):
     image_in_bytes = open(timestamp + '.jpeg', 'rb').read()
     response = requests.put('https://worker-silent-night-fcb9.dhravya.workers.dev/' + timestamp + '.jpg', data=image_in_bytes, headers={'Content-Type': 'image/jpeg', 'X-Custom-Auth-Key': 'yourmom'})
 
+    os.remove(timestamp + '.jpeg')
     return response.text
