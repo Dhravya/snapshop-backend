@@ -142,7 +142,7 @@ async def get_fashion_and_user_image(original_image: str, user_email: str):
     print(output_json)
 
     try:
-        create_generation(output_json)
+        create_generation(generated_json_output_as_dict=output_json)
     except Exception as e:
         print(e)
 
@@ -173,7 +173,7 @@ async def get_fashion_recommendation_with_shopping_links(
         output_json = json.loads(output_json)
 
     try:
-        create_generation(output_json)
+        create_generation(generated_json_output_as_dict=output_json)
     except Exception as e:
         print(e)
 
