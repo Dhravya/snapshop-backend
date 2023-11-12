@@ -17,6 +17,7 @@ class User(JsonModel):
     email: str = Field(primary_key=True)
     name: str
     image_url: str
+    gender: str
 
     class Meta:
         database = redis
@@ -35,9 +36,9 @@ def get_user(email: str) -> Optional[User]:
     user = User.get(pk=email)
     return user
 
-def create_user(name: str, email: str, image_url: AnyHttpUrl) -> User:
+def create_user(name: str, email: str, image_url: AnyHttpUrl, gender: str) -> User:
     """Create user in redis"""
-    user = User(name=name, email=email, image_url=image_url)
+    user = User(name=name, email=email, image_url=image_url, gender=gender)
     user.save()
     return user
 
