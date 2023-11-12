@@ -13,20 +13,19 @@ client = OpenAI()
 async def ask_shopwise(item_name: str):
     print("Asking shopwise for " + item_name)
 
-    async with httpx.AsyncClient() as client:
-        try:
-            response = await client.get(
-                f"https://dropit2-production.up.railway.app/googleSearch?itemName={item_name}"
-            )
+    response = requests.get(
+        f"https://dropit2-production.up.railway.app/googleSearch?itemName={item_name}",
+    )
 
-            if response.status_code == 200:
-                return response.json()
-            else:
-                print("ShopWise API failed")
-                return None
-        except Exception as e:
-            print(e)
+    try:
+        if response.status_code == 200:
+            return response.json()
+        else:
+            print("ShopWise API failed")
             return None
+    except Exception as e:
+        print(e)
+        return None
 
 
 @asyncify
