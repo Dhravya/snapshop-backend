@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Body
+from fastapi import FastAPI, Body, Form
 from fastapi.responses import JSONResponse
 from helpers.redis_helpers import create_user, get_all_generations
 from helpers.models import UserInfo, TryOnImage
@@ -40,10 +40,10 @@ def read_root():
 
 
 @app.post("/new_user")
-async def new_user(user: UserInfo = Body(...)):
+async def new_user(image: str = Form(...), email: str = Form(...), gender: str = Form(...), name: str = Form(...) ):
     """Send a request to create a new user whenever a new user is created in the frontend"""
-    url = upload_image(user.image)
-    user = create_user(user.name, user.email, url, user.gender)
+    url = upload_image(image)
+    user = create_user(name, email, url, gender)
 
     return JSONResponse(content=user.dict())
 
