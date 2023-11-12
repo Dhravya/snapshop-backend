@@ -10,3 +10,4 @@ python-dotenv
 asyncify
 pillow
 rich-traceback
+python-multipart
