@@ -1,6 +1,6 @@
 import httpx
 from openai import OpenAI
-from funcs import functions
+from funcs import functions, other_func
 import asyncify
 from helpers.redis_helpers import get_user, create_generation
 import asyncio
@@ -55,7 +55,7 @@ def get_fashion_image(base64_image: str):
             }
         ],
         max_tokens=500,
-        functions=functions,
+        functions=functions ,
         function_call="auto",
     )
 
@@ -63,13 +63,32 @@ def get_fashion_image(base64_image: str):
 
     return function_response
 
-async def get_fashion_and_user_image(original_image: str, user_email: str):
-    user_image = get_user(user_email).image_url
+@asyncify
+def get_fashion_recommendation(user_context: str):
 
-    if not user_image:
-        return {
-            "error": "User not found",
-        }
+    function_response = client.chat.completions.create(
+        model="gpt-3.5-turbo-1106",
+        messages=[
+            {
+                "role": "user",
+                "content": [
+                    {
+                        "type": "text",
+                        "text": f"Create a fashion recommendation for the user. Here's the user's context: {user_context}",
+                    },
+                ],
+            }
+        ],
+        max_tokens=500,
+        functions=other_func,
+        function_call="auto",
+    )
+
+    function_response = json.loads(function_response.choices[0].message.function_call.arguments)
+
+    return function_response
+
+async def get_fashion_and_user_image(original_image: str):
 
     output_json = await get_fashion_image(original_image)
     print(output_json)
@@ -87,6 +106,30 @@ async def get_fashion_and_user_image(original_image: str, user_email: str):
         output_json = json.loads(output_json)
 
     print(output_json)
+
+    try:
+        create_generation(output_json)
+    except Exception as e:
+        print(e)
+
+    return output_json
+
+async def get_fashion_recommendation_with_shopping_links(user_context: str):
+
+    output_json = await get_fashion_recommendation(user_context)
+    print(output_json)
+
+    shopping_links = output_json['fashion_items_as_keywords']
+    print(shopping_links)
+
+    shopping_links = await asyncio.gather(
+        *[ask_shopwise(keyword) for keyword in shopping_links]
+    )
+    output_json['fashion_items_as_keywords'] = shopping_links
+    output_json['original_image'] = user_context
+
+    if not isinstance(output_json, dict):
+        output_json = json.loads(output_json)
 
     try:
         create_generation(output_json)

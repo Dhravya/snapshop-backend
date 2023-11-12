@@ -3,7 +3,7 @@ from fastapi.responses import JSONResponse
 from helpers.redis_helpers import create_user, get_all_generations
 from helpers.models import UserInfo, TryOnImage
 from dotenv import load_dotenv
-from api_calls import get_fashion_and_user_image
+from api_calls import get_fashion_and_user_image, get_fashion_recommendation_with_shopping_links
 from redis_om import Migrator, get_redis_connection
 from os import environ as env
 from dotenv import load_dotenv
@@ -50,7 +50,15 @@ async def new_user(user: UserInfo = Body(...)):
 @app.post("/fashion_sense")
 async def predict(image: TryOnImage = Body(...)):
     json_output = await get_fashion_and_user_image(
-        image.original_image, image.user_email
+        image.original_image
+    )
+
+    return JSONResponse(content=json_output)
+
+@app.get("/fashion_recommendation")
+async def predict_recommendation(user_prompt: str):
+    json_output = await get_fashion_recommendation_with_shopping_links(
+        user_prompt
     )
 
     return JSONResponse(content=json_output)
