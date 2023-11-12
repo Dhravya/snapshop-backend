@@ -44,7 +44,7 @@ def create_user(name: str, email: str, image_url: AnyHttpUrl, gender: str) -> Us
 
 def create_generation(generated_json_output_as_dict: dict) -> Generation:
     """Create generation in redis"""
-    generation = Generation(generated_json_output_as_dict)
+    generation = Generation(generated_json_output_as_dict=generated_json_output_as_dict)
     generation.save()
     return generation
 
@@ -52,6 +52,6 @@ def get_all_generations() -> List[Generation]:
     """Get all generations from redis"""
     generations = Generation.all_pks()
 
-    g = [Generation.get(pk=generation).dict() for generation in generations]
+    g = [Generation.get(pk=generation).dict()['generated_json_output_as_dict'] for generation in generations]
 
     return g

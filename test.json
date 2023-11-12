@@ -1,44 +1,19 @@
-[
-    {
-        "comment": "The fashion sense in this image is stylish and casual with a utility-inspired design.",
-        "style_name": "casual",
-        "fashion_items_as_keywords": [
-            {
-                "link": "https://poshmark.com/listing/NWT-Freedom-Foundry-Dry-Goods-Flannel-plaid-button-down-shirt-black-white-grey-63aa0d711741be5ab95f63a6?com_cvv=d30042528f072ba8a22b19c81250437cd47a2f30330f0ed03551c4efdaf3409e#utm_source=gdm_unpaid&rct=j&q=&esrc=s&opi=95576897&sa=U&ved=0ahUKEwiN8PD2kb2CAxXOITQIHUMtC64QguUECOUS&usg=AOvVaw0plsPFbzexyvOtF5F3MAod",
-                "name": "Freedom Foundry Dry Goods Shirts | Nwt Freedom Foundry Dry Goods Flannel Plaid ...",
-                "price": "$15.00",
-                "img": "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcS5XVIY5cRig_DlttwohhFlFkeDT017NvfHq4O3slFLpO_BY7crAyNXE8XYN1O4MukgXucAT1VpGns0TjMBp33UDXHmFJvIfLk1gqYSlaHF&usqp=CAE"
-            },
-            {
-                "link": "https://www.abercrombie.com/shop/us/p/ultra-high-rise-90s-straight-jean-54339417?seq=87&source=googleshopping&rct=j&q=&esrc=s&opi=95576897&sa=U&ved=0ahUKEwjk99b4kb2CAxUiMTQIHQlmBd8QguUECNUT&usg=AOvVaw3Zq8GS25a_zHJGWgGvGZcu",
-                "name": "Women's Ultra High Rise 90s Straight Jean in Dark Grey | Size 28 Long ...","price": "$76.50",
-                "img": "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcRhVBHSuH0y7L_ae4C3U8Ac9iruVjKyWo0-bXOeXqiTMWoiPxVmxlrX0-RT1V0egdSY6yXshDYftFWU14LVXSWFk9KDR2IheYuAIbqoo5ZDbTk3vUlM9xDlZg&usqp=CAE"
-            },
-            {
-                "link": "https://www.amazon.com/Gildan-Mens-T-Shirt-White-Small/dp/B077ZCT9SS?source=ps-sl-shoppingads-lpcontext&ref_=fplfs&psc=1&smid=ATVPDKIKX0DER&rct=j&q=&esrc=s&opi=95576897&sa=U&ved=0ahUKEwi-nLL6kb2CAxWFIzQIHSXgAgkQguUECNkU&usg=AOvVaw2ThYUHhb8rlNphltHMZ3Bv",
-                "name": "Gildan Men's Crew T-Shirt 6 Pack, White, Small","price": "$15.97",
-                "img": "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcQj2H41uEALCGPRFFXwmK0HqsDJ0f5n3isGetlAJAKVlq5T1eu_gEtmvmUWnMG2WxCTnT10BVRPQ2qYz_O92Ku4TPLK8ki3VOWvf-uNKzl99R6Ja2QUghna&usqp=CAE"
-            }
-        ],
-        "original_image": "https://edcomposer.dhr.wtf/1699746721071.jpg"
-    },
-    {
-        "comment": "The fashion sense is understated yet put-together, suitable for a casual outing or a semi-informal event.",
-        "style_name": "casual",
-        "fashion_items_as_keywords": [
-            {
-                "link": "https://www.amazon.com/RAY-Crewneck-Pullover-Sweaters-6X-Large/dp/B0B72F6D3G?source=ps-sl-shoppingads-lpcontext&ref_=fplfs&psc=1&smid=ATVPDKIKX0DER&rct=j&q=&esrc=s&opi=95576897&sa=U&ved=0ahUKEwj49ai7lb6CAxXCIjQIHbBfC7EQguUECOwU&usg=AOvVaw2DNQLtFB8qxZDatLFXfAk7",
-                "name": "X-Ray Men's Basic Crewneck Pullover Midweight Sweater - Navy - Size 6XL",
-                "price": "$14.00",
-                "img": "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcRJgGwuw2A5Zf3G_HsmITHQ9qmBh_MXBmV4IzBvYoLp-V5lB02ElBM6QOQdyAH1Yp0NKQQfpW0HGtR1JNuUSuZuhfOmwSCvqhaq4KM4pLiQ&usqp=CAE"
-            },
-            {
-                "link": "https://www.asos.com/us/asos-design/asos-design-90s-straight-jeans-in-vintage-lightwash/prd/23024731?affid=26521&freelisting=yes&rct=j&q=&esrc=s&opi=95576897&sa=U&ved=0ahUKEwjhnfy8lb6CAxXWJTQIHY0FBhUQguUECNUU&usg=AOvVaw3LQRlzpjV9bGqJ17v81YYl";,
-                "name": "ASOS Design 90s Straight Jeans in Vintage lightwash-Blues",
-                "price": "$34.99",
-                "img": "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcSrJo4X8FO0XsUsbdRqHaAExi0unsbU-uL6_kWuTZc7gHORc8DcGpyIiVx5xKvSyle80-Ge8IDJysQFL4Tuz_yjkRNEHDNMTwMgsCqQVdBa&usqp=CAE";
-            }
-        ],
-        "original_image": "https://edcomposer.dhr.wtf/1699782024851.jpg"
-    }
-]
+{
+    "comment": "The fashion sense is understated yet put-together, suitable for a casual outing or a semi-informal event.",
+    "style_name": "casual",
+    "fashion_items_as_keywords": [
+        {
+            "link": "https://www.amazon.com/RAY-Crewneck-Pullover-Sweaters-6X-Large/dp/B0B72F6D3G?source=ps-sl-shoppingads-lpcontext&ref_=fplfs&psc=1&smid=ATVPDKIKX0DER&rct=j&q=&esrc=s&opi=95576897&sa=U&ved=0ahUKEwj49ai7lb6CAxXCIjQIHbBfC7EQguUECOwU&usg=AOvVaw2DNQLtFB8qxZDatLFXfAk7",
+            "name": "X-Ray Men's Basic Crewneck Pullover Midweight Sweater - Navy - Size 6XL",
+            "price": "$14.00",
+            "img": "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcRJgGwuw2A5Zf3G_HsmITHQ9qmBh_MXBmV4IzBvYoLp-V5lB02ElBM6QOQdyAH1Yp0NKQQfpW0HGtR1JNuUSuZuhfOmwSCvqhaq4KM4pLiQ&usqp=CAE"
+        },
+        {
+            "link": "https://www.asos.com/us/asos-design/asos-design-90s-straight-jeans-in-vintage-lightwash/prd/23024731?affid=26521&freelisting=yes&rct=j&q=&esrc=s&opi=95576897&sa=U&ved=0ahUKEwjhnfy8lb6CAxXWJTQIHY0FBhUQguUECNUU&usg=AOvVaw3LQRlzpjV9bGqJ17v81YYl",
+            "name": "ASOS Design 90s Straight Jeans in Vintage lightwash-Blues",
+            "price": "$34.99",
+            "img": "https://encrypted-tbn3.gstatic.com/shopping?q=tbn:ANd9GcSrJo4X8FO0XsUsbdRqHaAExi0unsbU-uL6_kWuTZc7gHORc8DcGpyIiVx5xKvSyle80-Ge8IDJysQFL4Tuz_yjkRNEHDNMTwMgsCqQVdBa&usqp=CAE"
+        }
+    ],
+    "original_image": "https://edcomposer.dhr.wtf/1699782024851.jpg"
+}
