@@ -9,13 +9,28 @@ from helpers.upload_image import upload_image
 
 client = OpenAI()
 
+
 async def ask_shopwise(item_name: str):
     print("Asking shopwise for " + item_name)
     # response = httpx.get(f"https://dropit2-production.up.railway.app/googleSearch?itemName={item_name}")
     # return response.json()
 
-    response = httpx.get(f"https://dropit2-production.up.railway.app/googleSearch?itemName={item_name}", timeout=6000)
-    return response.json()
+    response = httpx.get(
+        f"https://dropit2-production.up.railway.app/googleSearch?itemName={item_name}",
+        timeout=6000,
+    )
+
+    if response.status_code == 200:
+        return response.json()
+    else:
+        print("ShopWise API failed")
+        return {
+            "link": "https://www.amazon.com/Gildan-Mens-T-Shirt-White-Small/dp/B077ZCT9SS?source=ps-sl-shoppingads-lpcontext&ref_=fplfs&psc=1&smid=ATVPDKIKX0DER&rct=j&q=&esrc=s&opi=95576897&sa=U&ved=0ahUKEwi-nLL6kb2CAxWFIzQIHSXgAgkQguUECNkU&usg=AOvVaw2ThYUHhb8rlNphltHMZ3Bv",
+            "name": "Gildan Men's Crew T-Shirt 6 Pack, White, Small",
+            "price": "$15.97",
+            "img": "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcQj2H41uEALCGPRFFXwmK0HqsDJ0f5n3isGetlAJAKVlq5T1eu_gEtmvmUWnMG2WxCTnT10BVRPQ2qYz_O92Ku4TPLK8ki3VOWvf-uNKzl99R6Ja2QUghna&usqp=CAE",
+        }
+
 
 @asyncify
 def get_fashion_image(base64_image: str, user_gender: str):
@@ -60,13 +75,15 @@ def get_fashion_image(base64_image: str, user_gender: str):
         function_call="auto",
     )
 
-    function_response = json.loads(function_response.choices[0].message.function_call.arguments)
+    function_response = json.loads(
+        function_response.choices[0].message.function_call.arguments
+    )
 
     return function_response
 
+
 @asyncify
 def get_fashion_recommendation(user_context: str, user_gender: str):
-
     function_response = client.chat.completions.create(
         model="gpt-3.5-turbo-1106",
         messages=[
@@ -85,29 +102,31 @@ def get_fashion_recommendation(user_context: str, user_gender: str):
         function_call="auto",
     )
 
-    function_response = json.loads(function_response.choices[0].message.function_call.arguments)
+    function_response = json.loads(
+        function_response.choices[0].message.function_call.arguments
+    )
 
     return function_response
 
-async def get_fashion_and_user_image(original_image: str, user_email: str):
 
+async def get_fashion_and_user_image(original_image: str, user_email: str):
     user = get_user(user_email)
 
-    if (user is None):
+    if user is None:
         raise Exception("User not found")
 
     output_json = await get_fashion_image(original_image, user.email)
     print(output_json)
 
-    shopping_links = output_json['fashion_items_as_keywords']
+    shopping_links = output_json["fashion_items_as_keywords"]
     print(shopping_links)
 
     shopping_links = await asyncio.gather(
         *[ask_shopwise(keyword) for keyword in shopping_links]
     )
-    output_json['fashion_items_as_keywords'] = shopping_links
-    output_json['original_image'] = upload_image(original_image)
-    
+    output_json["fashion_items_as_keywords"] = shopping_links
+    output_json["original_image"] = upload_image(original_image)
+
     if not isinstance(output_json, dict):
         output_json = json.loads(output_json)
 
@@ -120,24 +139,26 @@ async def get_fashion_and_user_image(original_image: str, user_email: str):
 
     return output_json
 
-async def get_fashion_recommendation_with_shopping_links(user_context: str, user_email: str):
 
+async def get_fashion_recommendation_with_shopping_links(
+    user_context: str, user_email: str
+):
     user = get_user(user_email)
 
-    if (user is None):
+    if user is None:
         raise Exception("User not found")
 
     output_json = await get_fashion_recommendation(user_context, user.email)
     print(output_json)
 
-    shopping_links = output_json['fashion_items_as_keywords']
+    shopping_links = output_json["fashion_items_as_keywords"]
     print(shopping_links)
 
     shopping_links = await asyncio.gather(
         *[ask_shopwise(keyword) for keyword in shopping_links]
     )
-    output_json['fashion_items_as_keywords'] = shopping_links
-    output_json['original_image'] = user_context
+    output_json["fashion_items_as_keywords"] = shopping_links
+    output_json["original_image"] = user_context
 
     if not isinstance(output_json, dict):
         output_json = json.loads(output_json)
