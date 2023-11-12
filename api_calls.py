@@ -20,10 +20,19 @@ async def ask_shopwise(item_name: str):
         timeout=6000,
     )
 
-    if response.status_code == 200:
-        return response.json()
-    else:
-        print("ShopWise API failed")
+    try:
+        if response.status_code == 200:
+            return response.json()
+        else:
+            print("ShopWise API failed")
+            return {
+                "link": "https://www.amazon.com/Gildan-Mens-T-Shirt-White-Small/dp/B077ZCT9SS?source=ps-sl-shoppingads-lpcontext&ref_=fplfs&psc=1&smid=ATVPDKIKX0DER&rct=j&q=&esrc=s&opi=95576897&sa=U&ved=0ahUKEwi-nLL6kb2CAxWFIzQIHSXgAgkQguUECNkU&usg=AOvVaw2ThYUHhb8rlNphltHMZ3Bv",
+                "name": "Gildan Men's Crew T-Shirt 6 Pack, White, Small",
+                "price": "$15.97",
+                "img": "https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcQj2H41uEALCGPRFFXwmK0HqsDJ0f5n3isGetlAJAKVlq5T1eu_gEtmvmUWnMG2WxCTnT10BVRPQ2qYz_O92Ku4TPLK8ki3VOWvf-uNKzl99R6Ja2QUghna&usqp=CAE",
+            }
+    except Exception as e:
+        print(e)
         return {
             "link": "https://www.amazon.com/Gildan-Mens-T-Shirt-White-Small/dp/B077ZCT9SS?source=ps-sl-shoppingads-lpcontext&ref_=fplfs&psc=1&smid=ATVPDKIKX0DER&rct=j&q=&esrc=s&opi=95576897&sa=U&ved=0ahUKEwi-nLL6kb2CAxWFIzQIHSXgAgkQguUECNkU&usg=AOvVaw2ThYUHhb8rlNphltHMZ3Bv",
             "name": "Gildan Men's Crew T-Shirt 6 Pack, White, Small",
